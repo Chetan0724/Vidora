@@ -49,3 +49,7 @@ const userSchema = new Schema(
 );
 
 export const User = mongoose.model("User", userSchema);
+
+userSchema.methods.isPasswordCorrect = function () {
+  this.password 
+};
