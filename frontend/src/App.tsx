@@ -1,16 +1,20 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router";
+import Auth from "./pages/Auth";
+import Header from "./components/Header";
 
-function App() {
-  const [count, setCount] = useState(0);
+const router = createBrowserRouter([
+  {
+    path: "/",
+    Component: Header,
+  },
+  {
+    path: "/auth",
+    Component: Auth,
+  },
+]);
 
-  return (
-    <>
-      <h1 className="bg-red-500">Vidora Platform</h1>
-    </>
-  );
-}
+const App = () => {
+  return <RouterProvider router={router} />;
+};
 
 export default App;
