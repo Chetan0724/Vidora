@@ -8,7 +8,8 @@ export function ModeToggle() {
   return (
     <>
       <Button
-        variant="outline"
+        className="cursor-pointer"
+        variant="ghost"
         size="icon"
         onClick={() => {
           if (theme == "light") setTheme("dark");
