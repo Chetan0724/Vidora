@@ -117,3 +117,27 @@ const refreshAccessToken = async (req, res) => {
     });
   }
 };
+
+const logoutUser = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
+    if (refreshToken) {
+      await User.updateOne({ refreshToken }, { $unset: { refreshToken: 1 } });
+    }
+
+    const options = {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "None",
+    };
+
+    res
+      .clearCookie("refreshToken", options)
+      .status(200)
+      .json({ message: "User logged out successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};
+
+export { loginUser, registerUser, refreshAccessToken, logoutUser };
