@@ -1,7 +1,7 @@
 import { User } from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import { generateAccessTokenAndRefreshTokens } from "../utils/generateTokens.js";
+import { generateAccessAndRefreshTokens } from "../utils/generateTokens.js";
 
 const registerUser = async (req, res) => {
   try {
@@ -26,10 +26,7 @@ const registerUser = async (req, res) => {
 
     await user.save();
 
-    const { accessToken } = await generateAccessTokenAndRefreshTokens(
-      user,
-      res
-    );
+    const { accessToken } = await generateAccessAndRefreshTokens(user, res);
 
     res.status(201).json({
       accessToken,
@@ -59,10 +56,7 @@ const loginUser = async (req, res) => {
     if (!isPasswordCorrect)
       return res.status(400).json({ message: "Invalid credentials" });
 
-    const { accessToken } = await generateAccessTokenAndRefreshTokens(
-      user,
-      res
-    );
+    const { accessToken } = await generateAccessAndRefreshTokens(user, res);
 
     res.json({
       accessToken,
@@ -102,10 +96,7 @@ const refreshAccessToken = async (req, res) => {
         .json({ message: "Invalid refresh token or user not found." });
     }
 
-    const { accessToken } = await generateAccessTokenAndRefreshTokens(
-      user,
-      res
-    );
+    const { accessToken } = await generateAccessAndRefreshTokens(user, res);
 
     res
       .status(200)
